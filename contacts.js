@@ -19,7 +19,7 @@ const getContactById = async (contactId) => {
     const fileData = JSON.parse(data);
 
     fileData.map((contact) => {
-      if (contactId === Number(contact.id)) {
+      if (contactId === contact.id) {
         console.log(contact.name);
       }
     });
@@ -33,7 +33,7 @@ const removeContact = async (contactId) => {
     const data = await fs.readFile(contactsPath, "utf-8");
     const fileData = JSON.parse(data);
 
-    let index = fileData.map((el) => Number(el.id)).indexOf(contactId);
+    let index = fileData.map((el) => el.id).indexOf(contactId);
 
     fileData.splice(index, 1);
     console.table(fileData);
