@@ -18,7 +18,7 @@ const getContactById = async (contactId) => {
     const data = await fs.readFile(contactsPath, "utf-8");
     const fileData = JSON.parse(data);
 
-    fileData.map((contact) => {
+    fileData.filter((contact) => {
       if (contactId === contact.id) {
         console.log(contact.name);
       }
@@ -37,6 +37,7 @@ const removeContact = async (contactId) => {
 
     fileData.splice(index, 1);
     console.table(fileData);
+    fs.writeFile("removeContact.js", JSON.stringify(fileData));
   } catch (err) {
     console.log(err.message);
   }
@@ -54,9 +55,11 @@ const addContact = async (name, email, phone) => {
       phone,
     };
 
-    fileData.push(newContact);
-
+    if (newContact.name && newContact.email && newContact.phone) {
+      fileData.push(newContact);
+    }
     console.table(fileData);
+    fs.writeFile("addContact.js", JSON.stringify(fileData));
   } catch (err) {
     console.log(err.message);
   }
